@@ -24,4 +24,6 @@ public abstract class Entity {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public abstract void update(GameContainer gc, int i);
 }

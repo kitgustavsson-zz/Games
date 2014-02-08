@@ -26,11 +26,15 @@ public class Adventure extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		entities.add(new Player());
+		entities.add(new Player(gc));
 	}
 
 	@Override
-	public void update(GameContainer gc, int i) throws SlickException {}
+	public void update(GameContainer gc, int i) throws SlickException {
+		for (Entity e : entities) {
+			e.update(gc, i);
+		}
+	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
