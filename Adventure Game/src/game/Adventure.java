@@ -39,21 +39,33 @@ public class Adventure extends BasicGame
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
+		// Pixelation :D
+		g.scale(2, 2);
+		
 		for (Entity e : entities) {
 			e.draw(gc, g);
 		}
 		
-		g.drawString("Hello World!", 30, 30);
+		g.drawString("Hello World!", 32, 32);
+		
+		for (int x = 0; x < 320; x += 16) {
+			g.drawLine(x, 0, x, 240);
+		}
+		
+		for (int y = 0; y < 240; y += 16) {
+			g.drawLine(0, y, 320, y);
+		}
 	}
 
 	public static void main(String[] args)
 	{	
 		try
 		{
-			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Adventure("Adventure Game"));
-			appgc.setDisplayMode(640, 480, false);
-			appgc.start();
+			AppGameContainer app;
+			app = new AppGameContainer(new Adventure("Adventure Game"));
+			app.setDisplayMode(640, 480, false);
+			app.setTargetFrameRate(60);
+			app.start();
 		}
 		catch (SlickException ex)
 		{
