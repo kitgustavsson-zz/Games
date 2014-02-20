@@ -6,6 +6,11 @@ import org.newdawn.slick.Input;
 
 public class Player extends Entity {
 	private Input input;
+	private boolean goingRight, goingUp;
+	
+	/**
+	 * Should be power of 2 or divisible by grid size (8)
+	 */
 	private int speed;
 	
 	public Player(GameContainer gc) {
@@ -22,25 +27,35 @@ public class Player extends Entity {
 	public void update(GameContainer gc, int i) {
 		if (input.isKeyDown(Input.KEY_UP)) {
 			setY(getY() - speed);
+			goingUp = true;
 		}
 
 		if (input.isKeyDown(Input.KEY_DOWN)) {
 			setY(getY() + speed);
+			goingUp = false;
 		}
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			setX(getX() + speed);
+			goingRight = true;
 		}
 
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			setX(getX() - speed);
+			goingRight = false;
 		}
 
-		// Normalize Y to 8x8 grid
+		// Normalize to 8x8 grid
 		// TODO: Update normalization to take direction into consideration for smoother movement
 		if (!input.isKeyDown(Input.KEY_UP) && !input.isKeyDown(Input.KEY_DOWN)) {
 			if (getY() % 16 != 0 && getY() % 16 != 8) {
-				setY((int)(getY() + speed));
+				setY((int)(getY() + (goingUp ? -speed : speed)));
+			}
+		}
+		
+		if (!input.isKeyDown(Input.KEY_LEFT) && !input.isKeyDown(Input.KEY_RIGHT)) {
+			if (getX() % 16 != 0 && getX() % 16 != 8) {
+				setX((int)(getX() + (goingRight ? speed : -speed)));
 			}
 		}
 	}
